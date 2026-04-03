@@ -41,7 +41,11 @@ class ResponsePipeline:
 
     def __init__(self, config: PersonaConfig) -> None:
         self._clock = CircadianClock(config)
-        self._splitter = MessageSplitter(config.style.max_chunk_length, config.style.split_mode)
+        self._splitter = MessageSplitter(
+            config.style.max_chunk_length,
+            config.style.split_mode,
+            config.style.max_messages,
+        )
         self._style = StyleTransformer(config.style)
         self._timing = TimingCalculator(config.timing)
         self._rng = self._style._rng  # share seed for consistent behaviour

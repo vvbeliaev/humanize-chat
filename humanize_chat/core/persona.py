@@ -16,6 +16,8 @@ class StyleConfig:
     # sentence: split on .!?… boundaries (default, good for business/casual)
     # emotional: split on thought rhythm — shorter chunks, mid-sentence breaks
     split_mode: Literal["sentence", "emotional"] = "sentence"
+    # Maximum messages per burst (0 = no persona-level cap).
+    max_messages: int = 0
 
 
 @dataclass(frozen=True)
@@ -89,6 +91,7 @@ class PersonaConfig:
                 abbreviations=raw_style.get("abbreviations", True),
                 reaction_pool=tuple(raw_style.get("reaction_pool", ["👀", "🤔", "😶"])),
                 split_mode=raw_style.get("split_mode", "sentence"),
+                max_messages=raw_style.get("max_messages", 0),
             ),
             timing=TimingConfig(
                 typing_speed_cps=raw_timing.get("typing_speed_cps", 4.5),
