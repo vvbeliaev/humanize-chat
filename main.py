@@ -3,7 +3,13 @@
 import asyncio
 from datetime import datetime, timezone
 
-from humanize import BaseAdapter, PersonaConfig, PersonaState, PrintTransport, ResponsePipeline
+from humanize import (
+    BaseAdapter,
+    PersonaConfig,
+    PersonaState,
+    PrintTransport,
+    ResponsePipeline,
+)
 
 
 async def demo(state: PersonaState, text: str) -> None:
