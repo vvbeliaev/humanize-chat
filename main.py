@@ -3,7 +3,7 @@
 import asyncio
 from datetime import datetime, timezone
 
-from humanize import (
+from humanize_chat import (
     BaseAdapter,
     PersonaConfig,
     PersonaState,

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Literal
 
 
 @dataclass(frozen=True)
@@ -10,6 +10,12 @@ class StyleConfig:
     max_chunk_length: int = 120
     emoji_frequency: float = 0.15
     abbreviations: bool = True
+    # Reaction emoji pool — used for AVOIDING intent and ambient reactions.
+    # Override per persona register: business=("👍","🤝"), romantic=("❤️","🔥")
+    reaction_pool: tuple[str, ...] = ("👀", "🤔", "😶")
+    # sentence: split on .!?… boundaries (default, good for business/casual)
+    # emotional: split on thought rhythm — shorter chunks, mid-sentence breaks
+    split_mode: Literal["sentence", "emotional"] = "sentence"
 
 
 @dataclass(frozen=True)
@@ -81,6 +87,8 @@ class PersonaConfig:
                 max_chunk_length=raw_style.get("max_chunk_length", 120),
                 emoji_frequency=raw_style.get("emoji_frequency", 0.15),
                 abbreviations=raw_style.get("abbreviations", True),
+                reaction_pool=tuple(raw_style.get("reaction_pool", ["👀", "🤔", "😶"])),
+                split_mode=raw_style.get("split_mode", "sentence"),
             ),
             timing=TimingConfig(
                 typing_speed_cps=raw_timing.get("typing_speed_cps", 4.5),
